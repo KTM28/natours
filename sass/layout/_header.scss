@@ -1,0 +1,55 @@
+/* everytime in any device the height of the header should be 95% of the view port */
+.header {
+    height: 95vh;
+    background-image: linear-gradient(to right bottom, rgba($color-primary-light, 0.8), rgba($color-primary-dark, 0.8)), url(../img/hero-small.jpg);
+    background-size: cover;
+    background-position: top;
+    position: relative;
+    /* this will allow to clip the image from the direction you want. it has 4 cordinates which starts clock-wise from top left, top right, bottom-right, bottom-left*/
+    /* also use https://bennettfeely.com/clippy/ for more polygons */
+    /* clip-path: polygon(50% 0%, 100% 100%, 0 100%) */
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0% 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0% 100%);
+
+    //👉🏽 192 dpi(Dots per inch) is the resolution of Apple retina screen. It is a high reolution screen usually used as a reference screen. Whenever the reolution is higher than 192 dpi and the width is larger than 600px the code below will apply.
+    // OR
+    //👉🏽  width is larger than 2000px the code below will apply regardless of dpi the 
+    // 👉🏽 (,) act as OR on the below conditional statement.
+    @media (min-resolution: 192dpi) and (min-width: 37.5em),
+    //👇🏽 this is the same as above but relates to only Safari browsers 
+    (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+    (min-width: 125em) {
+        background-image: linear-gradient(to right bottom, rgba($color-secondary-light, 0.8), rgba($color-secondary-dark, 0.8)), url(../img/hero.jpg);
+    }
+
+
+    @include respond(phone) {
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 80vh, 0% 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 80vh, 0% 100%);
+        margin-bottom: 2rem;
+    }
+
+    // using the (bem-Block element modifier) to nest slectors
+
+    &__logo-box {
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+    }
+
+    &__logo {
+        height: 3.5rem;
+    }
+
+    &__logo:hover {
+        animation: moveInRight 1s ease-in;
+    }
+
+    &__text-box {
+        /* this will allow to move the property(in this case the text) exactly in the center (* the translate property is not related to its parent but to the box itself) so -50% of the element itself in this case  */
+        // mixin for Centering the element
+        @include absCenter;
+        text-align: center;
+    }
+
+}

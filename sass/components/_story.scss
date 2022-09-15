@@ -1,0 +1,89 @@
+.story {
+    width: 75%;
+    margin: 0 auto;
+    // 0 on the X axis and 3 on the Y axis and 6rem blur
+    box-shadow: 0 3rem 6rem rgba($color-black, .1);
+    background-color: rgba($color-white, .6);
+    border-radius: $border-radius-small;
+    padding: 6rem;
+    padding-left: 9rem;
+    // paragraph will inherit this font size
+    font-size: $default-font-size;
+    transform: skewX(-12deg);
+
+    @include respond(tab-port) {
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+    }
+
+    @include respond(phone) {
+        transform: skewX(0);
+    }
+
+    &__shape {
+        width: 15rem;
+        height: 15rem;
+        float: left;
+        // 👇🏽to make the content next to image float around as if it was flowing around a circle
+        // the first radius 50% then it's the center of the circle 50% vertically 50% horizonatally 
+        -webkit-shape-outside: circle(50% at 50% 50%);
+        shape-outside: circle(50% at 50% 50%);
+
+        // circle shape
+        -webkit-clip-path: circle(50% at 50% 50%);
+        clip-path: circle(50% at 50% 50%);
+
+        // add some space between the text and image and skewX() to skew the image of the box in opposite direction
+        transform: translateX(-3rem) skewX(12deg);
+        position: relative;
+        // to fix the small glitch line occurence on transition of image on animation
+        overflow: hidden;
+
+        @include respond(phone) {
+            transform: translateX(-3rem) skewX(0);
+        }
+    }
+
+    &__image {
+        height: 100%;
+        transform: translateX(-4rem) scale(1.4);
+        transition: all .5s;
+    }
+
+    &__text {
+        transform: skewX(12deg);
+
+        @include respond(phone) {
+            transform: skewX(0);
+        }
+    }
+
+    &__caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 20%);
+        color: $color-white;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        text-align: center;
+        opacity: 0;
+        transition: all .5s;
+        // to fix the small glitch shaking of image on animation
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    // As soon as we hover the story we want to change the caption
+    &:hover &__caption {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    // As soon as we hover the story we want to apply zoom and scale
+    &:hover &__image {
+        transform: translateX(-4rem) scale(1);
+        filter: blur(0.3rem) brightness(80%);
+    }
+}

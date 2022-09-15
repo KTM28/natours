@@ -1,0 +1,134 @@
+.popup {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+    background-color: rgba($color-black, 0.3);
+    backdrop-filter: blur(10px);
+
+    //👉🏽Example (feature query): Implement the functionality in browsers that supports and leave out the browsers that do not support
+    //👉🏽 Ask the browesers if it support certain property 
+    // @supports(-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+    //     -webkit-backdrop-filter: blur(10px);
+    //     background-color: rgba($color-black, 0.3);
+    //     backdrop-filter: blur(10px);
+    // }
+
+    &__content {
+        width: 75%;
+        // 👇🏽 for testing purpose only
+        // height: 50rem;
+        background-color: $color-white;
+        box-shadow: 0 2rem 4rem rgba($color-black, 0.2);
+        // mixin for Centering the element
+        @include absCenter;
+        border-radius: 0.3rem;
+        display: table;
+        // to stop the img to overlap the border-radius
+        overflow: hidden;
+        opacity: 0;
+        // translate property is used here because one element cannot have tow transform property in this case it already has one from the mixin absCenter
+        transform: translate(-50%, -50%) scale(.25);
+        transition: all .5s .2s;
+
+        @include respond(phone) {
+            width: 100%;
+
+        }
+    }
+
+    &__left {
+        width: 33.333333%;
+        display: table-cell;
+
+        @include respond(tab-port) {
+            width: 100%;
+            display: flex;
+        }
+    }
+
+    &__right {
+        width: 66.6666667%;
+        display: table-cell;
+        vertical-align: middle;
+        padding: 3rem 5rem;
+
+        @include respond(tab-port) {
+            width: 100%;
+            display: inline-block;
+        }
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+
+        @include respond(tab-port) {
+            display: inline-block;
+            width: 50%;
+        }
+    }
+
+    &__text {
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+        // to divide the text into two column
+        -moz-column-count: 2;
+        column-count: 2;
+        -moz-column-gap: 4rem;
+        column-gap: 4rem; //1em = 14px . 1em is always the font size of the current element
+        -moz-column-rule: 0.1rem solid $color-grey-light-2;
+        column-rule: 0.1rem solid $color-grey-light-2;
+        // create hyphens around word that continues to next line
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+
+    // to target the url in popup 
+    &:target {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    //👇🏽 the popup is the target to simply style it's child element which is the content
+    &:target &__content {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    // popup close button
+    &__close {
+
+        &:link,
+        &:visited {
+            color: $color-grey-dark;
+            position: absolute;
+            top: 2.5rem;
+            right: 2.5rem;
+            font-size: 3rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all .3s;
+            line-height: 1;
+
+            @include respond(tab-port) {
+                color: $color-primary;
+            }
+        }
+
+        &:hover {
+            color: $color-primary;
+
+            @include respond(tab-port) {
+                color: $color-primary-dark;
+            }
+        }
+    }
+}

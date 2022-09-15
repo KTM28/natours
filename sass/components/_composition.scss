@@ -1,0 +1,68 @@
+.composition {
+    position: relative;
+
+    &__photo {
+        width: 55%;
+        box-shadow: 0 1.5rem 4rem rgba($color-black, .4);
+        // to put the img one on top of the other
+        position: absolute;
+        z-index: 10;
+        transition: all .2s;
+        // to create a space between the border and the element
+        outline-offset: 2rem;
+
+        @include respond(tab-port) {
+            float: left;
+            position: relative;
+            width: 33.3333333%;
+            box-shadow: 0 1.5rem 3rem rgba($color-black, .2);
+        }
+
+        &--p1 {
+            left: 0;
+            top: -2rem;
+
+            @include respond(tab-port) {
+                top: 0rem;
+                transform: scale(1.1);
+
+            }
+        }
+
+        &--p2 {
+            right: 0;
+            top: 2rem;
+
+            @include respond(tab-port) {
+                top: -1rem;
+                transform: scale(1.3);
+                z-index: 99;
+            }
+        }
+
+        &--p3 {
+            left: 20%;
+            top: 10rem;
+
+            @include respond(tab-port) {
+                top: 0rem;
+                left: 0;
+                transform: scale(1.1);
+            }
+        }
+
+        &:hover {
+            // with the property outline we can create a space between the border and the element. (whereas with property:border it's not possible)
+            outline: 1.5rem solid $color-primary;
+            transform: scale(1.05) translateY(-.5rem);
+            box-shadow: 0 2.5rem 4rem rgba($color-black, .5);
+            z-index: 20;
+        }
+    }
+
+    // 👇🏽 composition:hover composition__photo:not(:hover) {}
+    // When we Hover the .composition then select the composition__photo which is not hovered :not(:hover)
+    &:hover &__photo:not(:hover) {
+        transform: scale(0.95);
+    }
+}
